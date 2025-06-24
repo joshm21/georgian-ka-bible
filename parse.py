@@ -18,8 +18,8 @@ def parse_file(file_path):
         # Find the third table and iterate through its rows
         tables = soup.find_all('table')
         if len(tables) != 3:
-            print(f'len(tables) == {len(tables)}, not 3 as expected. skipping file.')
-            return 
+            print(f'{file_path} - len(tables) == {len(tables)}, not 3 as expected. skipping file.')
+            return verse_lines
 
         third_table = tables[2]
         rows = third_table.find_all('tr')
@@ -27,7 +27,7 @@ def parse_file(file_path):
         for row_index, row in enumerate(rows):
             cells = row.find_all('td')
             if len(cells) != 4:
-                print(f'len(cells) == {len(cells)}, not 4 as expected. skipping row.')
+                print(f'{file_path} - ndx:{row_index}, len(cells) == {len(cells)}, not 4 as expected. skipping row.')
                 continue
 
             # Extract data from the four columns
