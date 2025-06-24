@@ -8,7 +8,7 @@ def get_chapter_urls():
     base_url = 'https://www.orthodoxy.ge/tserili/biblia_sruli/'
     index_url = base_url + 'sarchevi.php'
     response = requests.get(index_url)
-    response.raise_for_status()  # Raise an error if the request failed
+    response.raise_for_status()
     soup = BeautifulSoup(response.text, 'html.parser')
 
     matching_links = []
@@ -21,7 +21,9 @@ def get_chapter_urls():
 
 def save_chapter_html(url, file_path):
     response = requests.get(url)
-    response.raise_for_status()
+    if response.status_code != 200:
+        print(f'skipping. {response.status_code} error for {url}')
+        return
     with open(file_path, "wb") as f:
         f.write(response.content)
 
